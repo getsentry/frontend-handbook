@@ -47,6 +47,22 @@ PropTypes.shape({
 
 If you’re re-using a custom prop-type or passing around a common shared shape like an organization, project, or user, then be sure to import a proptype from our useful collection of custom ones! [https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/sentryTypes.jsx](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/sentryTypes.jsx)
 
+### Event handlers
+
+We use different prefixes to better distinguish event handlers from event callback props.
+
+Use the `handle` prefix for event handlers, e.g:
+
+```
+<Button onClick={this.handleDelete}/>
+```
+
+For event callback props passed to the component use the `on` prefix, e.g:
+
+```
+<Button onClick={this.props.onDelete}>
+```
+
 ## CSS and Emotion
 
 Use Emotion, use the `theme` object.
