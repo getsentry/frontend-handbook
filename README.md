@@ -19,6 +19,38 @@ The frontend codebase is currently located under `src/sentry/static/sentry/app` 
 
 ## React
 
+### Defining React components
+
+New components use the class syntax, and the class field+arrow function method definition when they need to access this.
+
+```
+class Note extends React.Component {
+  static propTypes = {
+    author: PropTypes.object.isRequired,
+    onEdit: PropTypes.func.isRequired,
+  };
+
+  // Note that method is defined using an arrow function class field (to bind "this")
+  handleChange = value => {
+    let user = ConfigStore.get('user');
+
+    if (user.isSuperuser) {
+      this.props.onEdit(value);
+    }
+  };
+
+  render() {
+    let {content} = this.props; // use destructuring assignment for props
+
+    return <div onChange={this.handleChange}>{content}</div>;
+  }
+}
+
+export default Note;
+```
+
+Some older components use `createReactClass` and mixins, but this is deprecated.
+
 ### Components vs views
 
 Both the `app/components/` and `app/views` folders contain React components.
