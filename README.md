@@ -55,7 +55,7 @@ The best styles are ones you don’t write - whenever possible use existing comp
 
 New code should use the css-in-js tool [e m o t i o n](https://emotion.sh/) - it lets you bind styles to elements without the indirection of global selectors. You don’t even need to open another file!
 
-Take constants (z-indexes, paddings, colors) from `[p.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)`
+Take constants (z-indexes, paddings, colors) from [p.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)
 
 ```
 import styled from 'react-emotion';
@@ -77,9 +77,9 @@ Note that `emotion-grid` (e.g. `Flex` and `Box`) is being deprecated, avoid usin
 
 ## State management
 
-We currently use (Reflux)[https://github.com/reflux/refluxjs] for managing global state.
+We currently use [Reflux](https://github.com/reflux/refluxjs) for managing global state.
 
-Reflux implements the unidirectional data flow pattern outlined by (Flux)[https://facebook.github.io/flux/docs/overview.html]. Stores are registered under `app/stores` and are used to store various pieces of data used by the application. Actions need to be registered under `app/actions`. We use action creator functions (under `app/actionCreators`) to dispatch actions. Reflux stores listen to actions and update themselves accordingly.
+Reflux implements the unidirectional data flow pattern outlined by [Flux](https://facebook.github.io/flux/docs/overview.html). Stores are registered under `app/stores` and are used to store various pieces of data used by the application. Actions need to be registered under `app/actions`. We use action creator functions (under `app/actionCreators`) to dispatch actions. Reflux stores listen to actions and update themselves accordingly.
 
 We are currently exploring alternatives to the `Reflux` library for future use.
 
