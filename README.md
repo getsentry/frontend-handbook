@@ -23,7 +23,7 @@ The frontend codebase is currently located under `src/sentry/static/sentry/app` 
 
 New components use the class syntax, and the class field+arrow function method definition when they need to access this.
 
-```
+```javascript
 class Note extends React.Component {
   static propTypes = {
     author: PropTypes.object.isRequired,
@@ -70,7 +70,7 @@ Prefer `Proptypes.arrayOf` to `PropTypes.array` and `PropTypes.shape` to `PropT
 
 If you’re passing Objects with an important, well defined set of keys (that your component relies on) then define them explicitly with `PropTypes.shape`:
 
-```
+```javascript
 PropTypes.shape({
   username: PropTypes.string.isRequired,
   email: PropTypes.string
@@ -85,13 +85,13 @@ We use different prefixes to better distinguish event handlers from event callba
 
 Use the `handle` prefix for event handlers, e.g:
 
-```
+```javascript
 <Button onClick={this.handleDelete}/>
 ```
 
 For event callback props passed to the component use the `on` prefix, e.g:
 
-```
+```javascript
 <Button onClick={this.props.onDelete}>
 ```
 
@@ -105,7 +105,7 @@ New code should use the css-in-js tool [e m o t i o n](https://emotion.sh/) - i
 
 Take constants (z-indexes, paddings, colors) from [p.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)
 
-```
+```javascript
 import styled from 'react-emotion';
 
 const SomeComponent = styled('div')`
@@ -141,9 +141,9 @@ Client.addMockResponse is the best way to mock API requests. it’s [our code](h
 
 An important gotcha in our testing environment is the way that enzyme modifies many aspects of the react lifecycle to evaluate synchronously (even when they’re usually async). This can lull you into a false sense of security when you trigger some logic and don’t find it reflected immediately afterwards in your assert logic.
 
-Marking your test method async and using the await tick(); utility can let the event loop flush run events and fix this:
+Marking your test method `async` and using the `await tick();` utility can let the event loop flush run events and fix this:
 
-```
+```javascript
 wrapper.find('ExpandButton').simulate('click');
 await tick();
 expect(wrapper.find('CommitRow')).toHaveLength(2);
