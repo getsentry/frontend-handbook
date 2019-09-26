@@ -11,6 +11,7 @@ Frontend at Sentry
 - [CSS and Emotion](#css-and-emotion)
 - [State management](#state-management)
 - [Testing](#testing)
+- [Babel Syntax Plugins](#babel-plugins)
 - [Contributing](#contributing)
 
 ## Directory structure
@@ -151,6 +152,11 @@ expect(wrapper.find('CommitRow')).toHaveLength(2);
 
 Selectors:
 If you are writing jest tests, you can use a Component (and Styled Component) names as a selector. Additionally, if you need to use a DOM query selector, use `data-test-id` instead of a class name. We currently don’t, but it is something we can use babel to strip out during the build process.
+
+## Babel Syntax Plugins
+We have decided to only use ECMAScript proposals that are in stage 3 (or later) (See [TC39 Proposals](https://github.com/tc39/proposals)). Additionally, because we are migrating to typescript, we will align with what their compiler supports.
+The only exception to this are decorators.
+
 
 ## Contributing
 
