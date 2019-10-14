@@ -98,13 +98,10 @@ For event callback props passed to the component use the `on` prefix, e.g:
 
 ## CSS and Emotion
 
-Use Emotion, use the `theme` object.
-
-The best styles are ones you don’t write - whenever possible use existing components.
-
-New code should use the css-in-js tool [e m o t i o n](https://emotion.sh/) - it lets you bind styles to elements without the indirection of global selectors. You don’t even need to open another file!
-
-Take constants (z-indexes, paddings, colors) from [p.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)
+* Use Emotion, use the `theme` object.
+* The best styles are ones you don’t write - whenever possible use existing components.
+* New code should use the css-in-js library [e m o t i o n](https://emotion.sh/) - it lets you bind styles to elements without the indirection of global selectors. You don’t even need to open another file!
+* Take constants (z-indexes, paddings, colors) from [props.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)
 
 ```javascript
 import styled from 'react-emotion';
@@ -122,7 +119,7 @@ const SomeComponent = styled('div')`
 export default SomeComponent;
 ```
 
-Note that `emotion-grid` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
+* Note that `emotion-grid` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
 
 ## State management
 
@@ -150,9 +147,15 @@ await tick();
 expect(wrapper.find('CommitRow')).toHaveLength(2);
 ```
 
-Selectors:
+### Selectors
+
 If you are writing jest tests, you can use a Component (and Styled Component) names as a selector. Additionally, if you need to use a DOM query selector, use `data-test-id` instead of a class name. We currently don’t, but it is something we can use babel to strip out during the build process.
 
+### Undefined `theme` properties in tests
+
+Instead of using `mount()` from `enzyme...use this: `import {mountWithTheme} from 'sentry-test/enzyme'` so that the component under test gets wrapped with a [`<ThemeProvider>`](https://emotion.sh/docs/theming).
+  
+  
 ## Babel Syntax Plugins
 We have decided to only use ECMAScript proposals that are in stage 3 (or later) (See [TC39 Proposals](https://github.com/tc39/proposals)). Additionally, because we are migrating to typescript, we will align with what their compiler supports.
 The only exception to this are decorators.
