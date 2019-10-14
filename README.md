@@ -153,7 +153,7 @@ If you are writing jest tests, you can use a Component (and Styled Component) na
 
 ### Undefined `theme` properties in tests
 
-Instead of using `mount()` from `enzyme...use this: `import {mountWithTheme} from 'sentry-test/enzyme'` so that the component under test gets wrapped with a [`<ThemeProvider>`](https://emotion.sh/docs/theming).
+Instead of using `mount()` from `enzyme` ...use this: `import {mountWithTheme} from 'sentry-test/enzyme'` so that the component under test gets wrapped with a [`<ThemeProvider>`](https://emotion.sh/docs/theming).
   
   
 ## Babel Syntax Plugins
