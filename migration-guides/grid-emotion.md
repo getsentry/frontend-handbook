@@ -31,22 +31,28 @@ If you are modifying a component that is exported, be sure to grep through the c
 ### margin and padding
 Margin props begin with `m` and padding with `p`. The examples below will be using margin as an example
 
-* `m={2}` ==> `margin: ${space(2);`
-* `mx={2}` ==> `margin-left: ${space(2); margin-right: ${space(2)};`
-* `my={2}` ==> `margin-top: ${space(2); margin-bottom: ${space(2)};`
-* `ml={2}` ==> `margin-left: ${space(2);`
-* `mr={2}` ==> `margin-right: ${space(2);`
-* `mt={2}` ==> `margin-top: ${space(2);`
-* `mb={2}` ==> `margin-bottom: ${space(2);`
+
+| old (grid-emotion) | new (css/emotion/styled) |
+| -------------------| -------------------------|
+| `m={2}`            |`margin: ${space(2);` |
+| `mx={2}`           |`margin-left: ${space(2); margin-right: ${space(2)};` |
+| `my={2}`           |`margin-top: ${space(2); margin-bottom: ${space(2)};`|
+| `ml={2}`           |`margin-left: ${space(2);` |
+| `mr={2}`           |`margin-right: ${space(2);` |
+| `mt={2}`           |`margin-top: ${space(2);` |
+| `mb={2}`           |`margin-bottom: ${space(2);` |
 
 
 ### flexbox
 These are flexbox props
 
-* `align="center"` ==> `align-items: center;`
-* `justify="center"` ==> `justify-content: center;`
-* `direction="column"` ==> `flex-direction: column;`
-* `wrap="wrap"` ==> `flex-wrap: wrap;`
+
+| old (grid-emotion) | new (css/emotion/styled) |
+| -------------------| -------------------------|
+| `align="center"` | `align-items: center;`
+| `justify="center"` | `justify-content: center;`
+| `direction="column"` | `flex-direction: column;`
+| `wrap="wrap"` | `flex-wrap: wrap;`
 
 ### width (as an array)
 TBD - for now just ignore the import statement of `grid-emotion` e.g. `// eslint-disable-line no-restricted-imports`
