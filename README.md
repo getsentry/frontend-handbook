@@ -12,6 +12,7 @@ Frontend at Sentry
 - [State management](#state-management)
 - [Testing](#testing)
 - [Babel Syntax Plugins](#babel-plugins)
+- [lodash](#lodash)
 - [Contributing](#contributing)
 
 ## Directory structure
@@ -160,6 +161,12 @@ Instead of using `mount()` from `enzyme` ...use this: `import {mountWithTheme} f
 We have decided to only use ECMAScript proposals that are in stage 3 (or later) (See [TC39 Proposals](https://github.com/tc39/proposals)). Additionally, because we are migrating to typescript, we will align with what their compiler supports.
 The only exception to this are decorators.
 
+## Lodash
+Be sure to not import `lodash` utilities using the default `lodash` package. There is an `eslint` rule to make sure this does not happen. Instead, import the utility directly, e.g. `import isEqual from 'lodash/isEqual';`.
+
+Previously we used a combination of [lodash-webpack-plugin](https://www.npmjs.com/package/lodash-webpack-plugin) and [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) but it is easy to overlook these plugins and configuration when trying to use a new lodash utility (e.g. [this PR](https://github.com/getsentry/sentry/pull/13834)). With `webpack` tree shaking and `eslint` enforcement, we should be able to maintain reasonable bundle sizes.
+
+See [this PR](https://github.com/getsentry/sentry/pull/15521) for more information.
 
 ## Contributing
 
