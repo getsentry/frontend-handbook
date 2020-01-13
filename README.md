@@ -120,7 +120,7 @@ const SomeComponent = styled('div')`
 export default SomeComponent;
 ```
 
-* Note that `emotion-grid` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
+* Note that `reflexbox` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
 
 ## State management
 
