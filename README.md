@@ -184,7 +184,7 @@ This is a way to set a "default" value. e.g. previously you would do something l
 
 Which is a problem since `0` is a valid value for `volume`, but because it evaluates to `false` -y, we do not short circuit the expression and the value of `x` is `0.5`
 
-If instead we used null coalescing
+If instead we used [nullish coalescing](https://github.com/tc39/proposal-nullish-coalescing)
 
     let x = volume ?? 0.5
 
