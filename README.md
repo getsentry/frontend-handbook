@@ -12,6 +12,7 @@ Frontend at Sentry
 - [State management](#state-management)
 - [Testing](#testing)
 - [Babel Syntax Plugins](#babel-plugins)
+- [New Syntax](#new-syntax)
 - [lodash](#lodash)
 - [Contributing](#contributing)
 
@@ -155,13 +156,13 @@ If you are writing jest tests, you can use a Component (and Styled Component) na
 ### Undefined `theme` properties in tests
 
 Instead of using `mount()` from `enzyme` ...use this: `import {mountWithTheme} from 'sentry-test/enzyme'` so that the component under test gets wrapped with a [`<ThemeProvider>`](https://emotion.sh/docs/theming).
-  
-  
+
+
 ## Babel Syntax Plugins
 We have decided to only use ECMAScript proposals that are in stage 3 (or later) (See [TC39 Proposals](https://github.com/tc39/proposals)). Additionally, because we are migrating to typescript, we will align with what their compiler supports.
 The only exception to this are decorators.
 
-## Optional Chaining and Null Coalescing
+## New Syntax
 
 ### Optional Chaining
 
