@@ -11,7 +11,7 @@ Frontend at Sentry
 - [CSS and Emotion](#css-and-emotion)
 - [State management](#state-management)
 - [Testing](#testing)
-- [Babel Syntax Plugins](#babel-plugins)
+- [Babel Syntax Plugins](#babel-syntax-plugins)
 - [New Syntax](#new-syntax)
 - [lodash](#lodash)
 - [Contributing](#contributing)
