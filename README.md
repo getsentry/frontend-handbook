@@ -161,12 +161,64 @@ Instead of using `mount()` from `enzyme` ...use this: `import {mountWithTheme} f
 We have decided to only use ECMAScript proposals that are in stage 3 (or later) (See [TC39 Proposals](https://github.com/tc39/proposals)). Additionally, because we are migrating to typescript, we will align with what their compiler supports.
 The only exception to this are decorators.
 
+## Optional Chaining and Null Coalescing
+
+### Optional Chaining
+
+[Optional chaining](https://github.com/tc39/proposal-optional-chaining) helps us access [nested] objects without having to check for existence before each property/method access. If we try to access a property of an `undefined` or `null` object, it will stop and return `undefined`. 
+
+#### Syntax
+> The Optional Chaining operator is spelled `?.`. It may appear in three positions:
+```
+obj?.prop       // optional static property access
+obj?.[expr]     // optional dynamic property access
+func?.(...args) // optional function or method call
+```
+--- From https://github.com/tc39/proposal-optional-chaining
+
+### Nullish Coalescing
+
+This is a way to set a "default" value. e.g. previously you would do something like
+
+    let x = volume || 0.5;
+
+Which is a problem since `0` is a valid value for `volume`, but because it evaluates to `false` -y, we do not short circuit the expression and the value of `x` is `0.5`
+
+If instead we used null coalescing
+
+    let x = volume ?? 0.5
+
+It will only default to `0.5` if `volume` is `null` or `undefined`.
+
+#### Syntax
+> Base case. If the expression at the left-hand side of the ?? operator evaluates to undefined or null, its right-hand side is returned.
+```
+const response = {
+  settings: {
+    nullValue: null,
+    height: 400,
+    animationDuration: 0,
+    headerText: '',
+    showSplashScreen: false
+  }
+};
+
+const undefinedValue = response.settings.undefinedValue ?? 'some other default'; // result: 'some other default'
+const nullValue = response.settings.nullValue ?? 'some other default'; // result: 'some other default'
+const headerText = response.settings.headerText ?? 'Hello, world!'; // result: ''
+const animationDuration = response.settings.animationDuration ?? 300; // result: 0
+const showSplashScreen = response.settings.showSplashScreen ?? true; // result: false
+```
+--- From https://github.com/tc39/proposal-nullish-coalescing
+
 ## Lodash
 Be sure to not import `lodash` utilities using the default `lodash` package. There is an `eslint` rule to make sure this does not happen. Instead, import the utility directly, e.g. `import isEqual from 'lodash/isEqual';`.
 
 Previously we used a combination of [lodash-webpack-plugin](https://www.npmjs.com/package/lodash-webpack-plugin) and [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) but it is easy to overlook these plugins and configuration when trying to use a new lodash utility (e.g. [this PR](https://github.com/getsentry/sentry/pull/13834)). With `webpack` tree shaking and `eslint` enforcement, we should be able to maintain reasonable bundle sizes.
 
 See [this PR](https://github.com/getsentry/sentry/pull/15521) for more information.
+
+We prefer using optional chaining and nullish coalescing over `get` from `loadash/get`.
 
 ## Contributing
 
