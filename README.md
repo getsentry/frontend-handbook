@@ -14,6 +14,7 @@ Frontend at Sentry
 - [Babel Syntax Plugins](#babel-syntax-plugins)
 - [New Syntax](#new-syntax)
 - [lodash](#lodash)
+- [Typescript](#typescript)
 - [Contributing](#contributing)
 
 ## Directory structure
@@ -220,6 +221,105 @@ Previously we used a combination of [lodash-webpack-plugin](https://www.npmjs.co
 See [this PR](https://github.com/getsentry/sentry/pull/15521) for more information.
 
 We prefer using optional chaining and nullish coalescing over `get` from `loadash/get`.
+
+## Typescript
+
+### Typing defaultProps in class components
+
+```javascript
+import React from 'react';
+
+type DefaultProps = {
+  size: 'Small' | 'Medium' | 'Large'; // these should not be marked as optional
+};
+
+// no Partial<DefaultProps>
+type Props = DefaultProps & {
+  name: string;
+  codename?: string;
+};
+
+class Planet extends React.Component<Props> {
+  // no Partial<Props> because it would mark everything as optional
+  static defaultProps: DefaultProps = {
+    size: 'Medium',
+  };
+
+  render() {
+    const {name, size, codename} = this.props;
+
+    return (
+      <p>
+        {name} is a {size.toLowerCase()} planet.
+        {codename && ` Its codename is ${codename}`}
+      </p>
+    );
+  }
+}
+
+const planet = <Planet name="Mars" />;
+```
+or with help of typeof:
+```javascript
+import React from 'react';
+
+const defaultProps = {
+  size: 'Medium' as 'Small' | 'Medium' | 'Large',
+};
+
+type Props = {
+  name: string;
+  codename?: string;
+} & typeof defaultProps;
+// no Partial<typeof defaultProps> because it would mark everything as optional
+
+class Planet extends React.Component<Props> {
+  static defaultProps = defaultProps;
+
+  render() {
+    const {name, size, codename} = this.props;
+
+    return (
+      <p>
+        {name} is a {size.toLowerCase()} planet. Its color is{' '}
+        {codename && ` Its codename is ${codename}`}
+      </p>
+    );
+  }
+}
+
+const planet = <Planet name="Mars" />;
+```
+
+### Typing function components
+
+```javascript
+import React from 'react';
+
+// defaultProps on function components are being discontinued in the future
+// https://twitter.com/dan_abramov/status/1133878326358171650
+// https://github.com/reactjs/rfcs/pull/107
+// we should probably use default params
+
+type Props = {
+  name: string;
+  size?: 'Small' | 'Medium' | 'Large'; // props with es6 default params should be marked as optional
+  codename?: string;
+};
+
+// consensus is that typing destructured Props is slightly better than using React.FC<Props>
+// https://github.com/typescript-cheatsheets/react-typescript-cheatsheet#function-components
+const Planet = ({name, size = 'Medium', codename}: Props) => {
+  return (
+    <p>
+      {name} is a {size.toLowerCase()} planet.
+      {codename && ` Its codename is ${codename}`}
+    </p>
+  );
+};
+
+const planet = <Planet name="Mars" />;
+```
 
 ## Contributing
 
