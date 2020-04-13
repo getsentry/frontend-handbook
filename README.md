@@ -124,6 +124,22 @@ export default SomeComponent;
 
 * Note that `reflexbox` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
 
+### `stylelint` Errors
+
+#### "No duplicate selectors"
+This happens when you use a styled component as a selector, we need to tell stylelint that what we are interpolating is a selector by using comments to assist the linter. e.g.
+
+```javascript
+
+const ButtonBar = styled("div")`
+  ${/* sc-selector */Button) {
+     border-radius: 0;
+  }
+`;
+```
+
+See https://styled-components.com/docs/tooling#interpolation-tagging for other tags and more information.
+
 ## State management
 
 We currently use [Reflux](https://github.com/reflux/refluxjs) for managing global state.
