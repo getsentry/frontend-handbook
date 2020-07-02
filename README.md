@@ -21,6 +21,25 @@ Frontend at Sentry
 
 The frontend codebase is currently located under `src/sentry/static/sentry/app` in sentry and `static/getsentry` in getsentry. (We intend to align to `static/sentry` in future.)
 
+## Folder & File structure
+
+### File Naming
+
+- Name a file meaningfully, based on the how the module's functions, or classes are used or the application section they are used in.
+- Unless necessary, don't use prefixes or suffixes (ie. `dataScrubbingEditModal`, `dataScrubbingAddModal`) instead favor names like `dataScrubbing/editModal`.
+
+### Using `index.(j|t)?(sx)`
+
+> Having an `index` file in a folder provides a way to implicitly import the main file without specifying it
+
+The use of an index file should comply with the following rules:
+
+- If the folder is created to group components that are used together, and there is an entrypoint component, that uses the components within the grouping (examples, avatar, idBadge). The entrypoint component should be the index file.
+
+- *Don't* use an `index.(j|t)?(sx)` file if the folder contains components used in other parts of the app regardless of the entrypoint file. (ie, actionCreators, panels)
+
+- *Don't* use an index file just to re-export. Prefer importing individual components instead.
+
 ## React
 
 ### Defining React components
@@ -35,8 +54,8 @@ class Note extends React.Component {
   };
 
   // Note that method is defined using an arrow function class field (to bind "this")
-  handleChange = value => {
-    let user = ConfigStore.get('user');
+  handleChange = (value) => {
+    let user = ConfigStore.get("user");
 
     if (user.isSuperuser) {
       this.props.onEdit(value);
@@ -44,7 +63,7 @@ class Note extends React.Component {
   };
 
   render() {
-    let {content} = this.props; // use destructuring assignment for props
+    let { content } = this.props; // use destructuring assignment for props
 
     return <div onChange={this.handleChange}>{content}</div>;
   }
@@ -77,8 +96,8 @@ If you’re passing Objects with an important, well defined set of keys (that yo
 ```javascript
 PropTypes.shape({
   username: PropTypes.string.isRequired,
-  email: PropTypes.string
-})
+  email: PropTypes.string,
+});
 ```
 
 If you’re re-using a custom prop-type or passing around a common shared shape like an organization, project, or user, then be sure to import a proptype from our useful collection of custom ones! [https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/sentryTypes.jsx](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/sentryTypes.jsx)
@@ -90,7 +109,7 @@ We use different prefixes to better distinguish event handlers from event callba
 Use the `handle` prefix for event handlers, e.g:
 
 ```javascript
-<Button onClick={this.handleDelete}/>
+<Button onClick={this.handleDelete} />
 ```
 
 For event callback props passed to the component use the `on` prefix, e.g:
@@ -101,32 +120,33 @@ For event callback props passed to the component use the `on` prefix, e.g:
 
 ## CSS and Emotion
 
-* Use Emotion, use the `theme` object.
-* The best styles are ones you don’t write - whenever possible use existing components.
-* New code should use the css-in-js library [e m o t i o n](https://emotion.sh/) - it lets you bind styles to elements without the indirection of global selectors. You don’t even need to open another file!
-* Take constants (z-indexes, paddings, colors) from [props.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)
+- Use Emotion, use the `theme` object.
+- The best styles are ones you don’t write - whenever possible use existing components.
+- New code should use the css-in-js library [e m o t i o n](https://emotion.sh/) - it lets you bind styles to elements without the indirection of global selectors. You don’t even need to open another file!
+- Take constants (z-indexes, paddings, colors) from [props.theme](https://github.com/getsentry/sentry/blob/master/src/sentry/static/sentry/app/utils/theme.jsx)
 
 ```javascript
-import styled from 'react-emotion';
+import styled from "react-emotion";
 
-const SomeComponent = styled('div')`
+const SomeComponent = styled("div")`
   border-radius: 1.45em;
   font-weight: bold;
-  z-index: ${p => p.theme.zIndex.modal};
-  padding: ${p => p.theme.grid}px ${p => p.theme.grid * 2}px;
-  border: 1px solid ${p => p.theme.borderLight};
-  color: ${p => p.theme.purple};
-  box-shadow: ${p => p.theme.dropShadowHeavy};
+  z-index: ${(p) => p.theme.zIndex.modal};
+  padding: ${(p) => p.theme.grid}px ${(p) => p.theme.grid * 2}px;
+  border: 1px solid ${(p) => p.theme.borderLight};
+  color: ${(p) => p.theme.purple};
+  box-shadow: ${(p) => p.theme.dropShadowHeavy};
 `;
 
 export default SomeComponent;
 ```
 
-* Note that `reflexbox` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
+- Note that `reflexbox` (e.g. `Flex` and `Box`) is being deprecated, avoid using in new code.
 
 ### `stylelint` Errors
 
 #### "No duplicate selectors"
+
 This happens when you use a styled component as a selector, we need to tell stylelint that what we are interpolating is a selector by using comments to assist the linter. e.g.
 
 ```javascript
@@ -161,9 +181,9 @@ An important gotcha in our testing environment is the way that enzyme modifies m
 Marking your test method `async` and using the `await tick();` utility can let the event loop flush run events and fix this:
 
 ```javascript
-wrapper.find('ExpandButton').simulate('click');
+wrapper.find("ExpandButton").simulate("click");
 await tick();
-expect(wrapper.find('CommitRow')).toHaveLength(2);
+expect(wrapper.find("CommitRow")).toHaveLength(2);
 ```
 
 ### Selectors
@@ -174,8 +194,8 @@ If you are writing jest tests, you can use a Component (and Styled Component) na
 
 Instead of using `mount()` from `enzyme` ...use this: `import {mountWithTheme} from 'sentry-test/enzyme'` so that the component under test gets wrapped with a [`<ThemeProvider>`](https://emotion.sh/docs/theming).
 
-
 ## Babel Syntax Plugins
+
 We have decided to only use ECMAScript proposals that are in stage 3 (or later) (See [TC39 Proposals](https://github.com/tc39/proposals)). Additionally, because we are migrating to typescript, we will align with what their compiler supports.
 The only exception to this are decorators.
 
@@ -183,15 +203,18 @@ The only exception to this are decorators.
 
 ### Optional Chaining
 
-[Optional chaining](https://github.com/tc39/proposal-optional-chaining) helps us access [nested] objects without having to check for existence before each property/method access. If we try to access a property of an `undefined` or `null` object, it will stop and return `undefined`. 
+[Optional chaining](https://github.com/tc39/proposal-optional-chaining) helps us access [nested] objects without having to check for existence before each property/method access. If we try to access a property of an `undefined` or `null` object, it will stop and return `undefined`.
 
 #### Syntax
+
 > The Optional Chaining operator is spelled `?.`. It may appear in three positions:
+
 ```
 obj?.prop       // optional static property access
 obj?.[expr]     // optional dynamic property access
 func?.(...args) // optional function or method call
 ```
+
 --- From https://github.com/tc39/proposal-optional-chaining
 
 ### Nullish Coalescing
@@ -209,7 +232,9 @@ If instead we used [nullish coalescing](https://github.com/tc39/proposal-nullish
 It will only default to `0.5` if `volume` is `null` or `undefined`.
 
 #### Syntax
+
 > Base case. If the expression at the left-hand side of the ?? operator evaluates to undefined or null, its right-hand side is returned.
+
 ```
 const response = {
   settings: {
@@ -227,9 +252,11 @@ const headerText = response.settings.headerText ?? 'Hello, world!'; // result: '
 const animationDuration = response.settings.animationDuration ?? 300; // result: 0
 const showSplashScreen = response.settings.showSplashScreen ?? true; // result: false
 ```
+
 --- From https://github.com/tc39/proposal-nullish-coalescing
 
 ## Lodash
+
 Be sure to not import `lodash` utilities using the default `lodash` package. There is an `eslint` rule to make sure this does not happen. Instead, import the utility directly, e.g. `import isEqual from 'lodash/isEqual';`.
 
 Previously we used a combination of [lodash-webpack-plugin](https://www.npmjs.com/package/lodash-webpack-plugin) and [babel-plugin-lodash](https://github.com/lodash/babel-plugin-lodash) but it is easy to overlook these plugins and configuration when trying to use a new lodash utility (e.g. [this PR](https://github.com/getsentry/sentry/pull/13834)). With `webpack` tree shaking and `eslint` enforcement, we should be able to maintain reasonable bundle sizes.
@@ -243,26 +270,26 @@ We prefer using optional chaining and nullish coalescing over `get` from `loadas
 ### Typing defaultProps in class components
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 type DefaultProps = {
-  size: 'Small' | 'Medium' | 'Large'; // these should not be marked as optional
+  size: "Small" | "Medium" | "Large", // these should not be marked as optional
 };
 
 // no Partial<DefaultProps>
 type Props = DefaultProps & {
-  name: string;
-  codename?: string;
+  name: string,
+  codename?: string,
 };
 
 class Planet extends React.Component<Props> {
   // no Partial<Props> because it would mark everything as optional
   static defaultProps: DefaultProps = {
-    size: 'Medium',
+    size: "Medium",
   };
 
   render() {
-    const {name, size, codename} = this.props;
+    const { name, size, codename } = this.props;
 
     return (
       <p>
@@ -275,7 +302,9 @@ class Planet extends React.Component<Props> {
 
 const planet = <Planet name="Mars" />;
 ```
+
 or with help of typeof:
+
 ```javascript
 import React from 'react';
 
@@ -310,7 +339,7 @@ const planet = <Planet name="Mars" />;
 ### Typing function components
 
 ```javascript
-import React from 'react';
+import React from "react";
 
 // defaultProps on function components are being discontinued in the future
 // https://twitter.com/dan_abramov/status/1133878326358171650
@@ -318,14 +347,14 @@ import React from 'react';
 // we should probably use default params
 
 type Props = {
-  name: string;
-  size?: 'Small' | 'Medium' | 'Large'; // props with es6 default params should be marked as optional
-  codename?: string;
+  name: string,
+  size?: "Small" | "Medium" | "Large", // props with es6 default params should be marked as optional
+  codename?: string,
 };
 
 // consensus is that typing destructured Props is slightly better than using React.FC<Props>
 // https://github.com/typescript-cheatsheets/react-typescript-cheatsheet#function-components
-const Planet = ({name, size = 'Medium', codename}: Props) => {
+const Planet = ({ name, size = "Medium", codename }: Props) => {
   return (
     <p>
       {name} is a {size.toLowerCase()} planet.
