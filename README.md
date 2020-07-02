@@ -30,7 +30,7 @@ The frontend codebase is currently located under `src/sentry/static/sentry/app` 
 
 ### Using `index.(j|t)?(sx)`
 
-> Having an `index` file in a folder provides a way to implicitly import the main file of the folder without specifying it
+> Having an `index` file in a folder provides a way to implicitly import the main file without specifying it
 
 The use of an index file should comply with the following rules:
 
