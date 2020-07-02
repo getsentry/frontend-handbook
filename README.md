@@ -38,7 +38,7 @@ The use of an index file should comply with the following rules:
 
 - *Don't* use an `index.(j|t)?(sx)` file if the folder contains components used in other parts of the app regardless of the entrypoint file. (ie, actionCreators, panels)
 
-- DO NOT use the index file just to re-export. Prefer importing individual components instead.
+- *Don't* use an index file just to re-export. Prefer importing individual components instead.
 
 ## React
 
