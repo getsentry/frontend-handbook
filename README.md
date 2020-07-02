@@ -36,7 +36,7 @@ The use of an index file should comply with the following rules:
 
 - If the folder is created to group components that are used together, and there is a "master" component, I.e some component that uses all the components within the grouping (examples, avatar, idBadge). The master component should be the index file.
 
-- There must be NO `index.(j|t)?(sx)` file if the folder contains components used in other parts of the app regardless of the master file. (ie, actionCreators, panels)
+- *Don't* use an `index.(j|t)?(sx)` file if the folder contains components used in other parts of the app regardless of the entrypoint file. (ie, actionCreators, panels)
 
 - DO NOT use the index file just to re-export. Prefer importing individual components instead.
 
