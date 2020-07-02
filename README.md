@@ -34,7 +34,7 @@ The frontend codebase is currently located under `src/sentry/static/sentry/app` 
 
 The use of an index file should comply with the following rules:
 
-- If the folder is created to group components that are used together, and there is a "master" component, I.e some component that uses all the components within the grouping (examples, avatar, idBadge). The master component should be the index file.
+- If the folder is created to group components that are used together, and there is an entrypoint component, that uses the components within the grouping (examples, avatar, idBadge). The entrypoint component should be the index file.
 
 - *Don't* use an `index.(j|t)?(sx)` file if the folder contains components used in other parts of the app regardless of the entrypoint file. (ie, actionCreators, panels)
 
