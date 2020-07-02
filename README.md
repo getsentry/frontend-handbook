@@ -25,7 +25,7 @@ The frontend codebase is currently located under `src/sentry/static/sentry/app` 
 
 ### File Naming
 
-- Name a file meaningfully, based on what they are or do
+- Name a file meaningfully, based on the how the module's functions, or classes are used or the application section they are used in.
 - If not necessary, don't use prefixes or sufixes (ie, dataScrubbingEditModal, dataScrubbingAddModal)
 
 ### Using `index.(j|t)?(sx)`
